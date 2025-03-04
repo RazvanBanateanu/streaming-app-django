@@ -36,7 +36,7 @@ class Playlist(models.Model):
         on_delete=models.SET_NULL,
     )
     videos = models.ManyToManyField(
-        Video, related_name="playlist_item", blank=True, through='PlaylistItem'
+        Video, related_name="playlist_item", blank=True, through="PlaylistItem"
     )
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -68,4 +68,4 @@ class PlaylistItem(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['order', '-timestamp']
+        ordering = ["order", "-timestamp"]
