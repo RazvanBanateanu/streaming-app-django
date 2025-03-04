@@ -3,6 +3,7 @@ from django.utils.text import slugify
 
 from .models import PublishStateOptions
 
+
 def publish_state_pre_save(sender, instance, *args, **kwargs):
     is_publish = instance.state == PublishStateOptions.PUBLISH
     is_draft = instance.state == PublishStateOptions.DRAFT
@@ -11,6 +12,7 @@ def publish_state_pre_save(sender, instance, *args, **kwargs):
         instance.publish_timestamp = timezone.now()
     elif is_draft:
         instance.publish_timestamp = None
+
 
 def slugify_pre_save(sender, instance, *args, **kwargs):
     title = instance.title

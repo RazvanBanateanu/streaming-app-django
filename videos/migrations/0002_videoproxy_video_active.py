@@ -6,26 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('videos', '0001_initial'),
+        ("videos", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='VideoProxy',
-            fields=[
-            ],
+            name="VideoProxy",
+            fields=[],
             options={
-                'verbose_name': 'Published Video',
-                'verbose_name_plural': 'Published Videos',
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "verbose_name": "Published Video",
+                "verbose_name_plural": "Published Videos",
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('videos.video',),
+            bases=("videos.video",),
         ),
         migrations.AddField(
-            model_name='video',
-            name='active',
+            model_name="video",
+            name="active",
             field=models.BooleanField(default=True),
         ),
     ]

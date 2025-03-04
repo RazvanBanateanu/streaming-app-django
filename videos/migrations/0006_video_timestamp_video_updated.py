@@ -7,19 +7,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('videos', '0005_video_publish_timestamp'),
+        ("videos", "0005_video_publish_timestamp"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='video',
-            name='timestamp',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="video",
+            name="timestamp",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='video',
-            name='updated',
+            model_name="video",
+            name="updated",
             field=models.DateTimeField(auto_now=True),
         ),
     ]
