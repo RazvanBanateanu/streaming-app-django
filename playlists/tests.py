@@ -10,6 +10,15 @@ from .models import Playlist
 
 
 class VideoModelTestCase(TestCase):
+
+    def create_show_with_seasons(self):
+        the_office = Playlist.objects.create(title='The Office Series')
+        season_1 = Playlist.objects.create(title='The Office Series Season 1', parent=the_office, order=1)
+        season_2 = Playlist.objects.create(title='The Office Series Season 2', parent=the_office, order=2)
+        season_3 = Playlist.objects.create(title='The Office Series Season 3', parent=the_office, order=3)
+        shows = Playlist.objects.filter(parent__isnull=True)
+        self.show = Playlist.objects.get(id=1)
+
     def create_videos(self):
         video_a = Video.objects.create(title="My title", video_id="abc")
         video_b = Video.objects.create(title="My title", video_id="asc")
@@ -21,6 +30,7 @@ class VideoModelTestCase(TestCase):
 
     def setUp(self):
         self.create_videos()
+        self.create_show_with_seasons()
         self.obj_a = Playlist.objects.create(title="Random title", video=self.video_a)
         obj_b = Playlist.objects.create(
             title="Random title",
@@ -33,6 +43,12 @@ class VideoModelTestCase(TestCase):
         obj_b.videos.set(self.video_qs)
         obj_b.save()
         self.obj_b = obj_b
+
+    def test_show_has_seasons(self):
+        seasons = self.show.playlist_set.all()
+        self.assertTrue(seasons.exists())
+        self.assertEqual(seasons.count(),3)
+
 
     def test_playlist_video(self):
         self.assertEqual(self.obj_a.video, self.video_a)
@@ -71,11 +87,11 @@ class VideoModelTestCase(TestCase):
 
     def test_created_count(self):
         qs = Playlist.objects.all()
-        self.assertEqual(qs.count(), 2)
+        self.assertEqual(qs.count(), 6)
 
     def test_draft_case(self):
         qs = Playlist.objects.filter(state=PublishStateOptions.DRAFT)
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 5)
 
     def test_publish_case(self):
         qs = Playlist.objects.filter(state=PublishStateOptions.PUBLISH)
